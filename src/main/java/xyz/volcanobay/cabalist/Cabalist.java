@@ -31,6 +31,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
+import xyz.volcanobay.cabalist.core.CabalistBlocks;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Cabalist.MODID)
@@ -44,6 +45,8 @@ public class Cabalist {
         NeoForge.EVENT_BUS.register(this);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+        CabalistBlocks.register();
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

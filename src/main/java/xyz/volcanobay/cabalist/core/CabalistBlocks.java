@@ -9,14 +9,14 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import xyz.volcanobay.cabalist.Cabalist;
-import xyz.volcanobay.cabalist.blocks.OscilistoneBlock;
+import xyz.volcanobay.cabalist.content.blocks.OscilistoneBlock;
 
 import java.util.function.Supplier;
 
 public class CabalistBlocks {
     public static final RegistrationProvider<Block> BLOCKS = RegistrationProvider.get(Registries.BLOCK, Cabalist.MODID);
-    public static final RegistryObject<OscilistoneBlock> ANTENNA = registerBlock("antenna",
-            () -> new OscilistoneBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_BRICKS)
+    public static final RegistryObject<OscilistoneBlock> OSCILISTONE = registerBlock("oscilistone",
+            () -> new OscilistoneBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)
                     .strength(2.0f, 8f).noOcclusion()
             ));
 

@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -47,6 +48,10 @@ public class Cabalist {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
         CabalistBlocks.register();
+    }
+
+    public static ResourceLocation id(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MODID,path);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

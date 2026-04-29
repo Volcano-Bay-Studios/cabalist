@@ -1,6 +1,7 @@
 package xyz.volcanobay.cabalist.system.network;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -8,6 +9,7 @@ import xyz.volcanobay.cabalist.core.CabalistSpatialNetworks;
 
 public abstract class Network {
     protected final int id;
+    protected @Nullable SpatialNetworkMap<?> networkAccess = null;
 
     public Network(Integer id) {
         this.id = id;
@@ -29,5 +31,22 @@ public abstract class Network {
             }
         }
         return false;
+    }
+
+    public void setNetworkAccess(@Nullable SpatialNetworkMap<?> networkAccess) {
+        this.networkAccess = networkAccess;
+    }
+
+    /**
+     * Called when the network changes
+     */
+    public void update() {}
+
+    public void write(FriendlyByteBuf buf) {
+
+    }
+
+    public void read(FriendlyByteBuf buf) {
+
     }
 }

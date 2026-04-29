@@ -68,6 +68,11 @@ public class SpatialMap {
         }
     }
 
+    public void clear() {
+        initArrays(capacity);
+        size = 0;
+    }
+
     private void resize() {
         long[] oldX = keysX, oldY = keysY, oldZ = keysZ;
         int[] oldIds = networkIds;

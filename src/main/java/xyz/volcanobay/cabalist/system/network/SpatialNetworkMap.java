@@ -2,6 +2,7 @@ package xyz.volcanobay.cabalist.system.network;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,7 +31,14 @@ public class SpatialNetworkMap<T extends Network> extends ManagedSpatialNetwork 
     }
 
     public T getNetwork(int id) {
-        return networks.computeIfAbsent(id, factory);
+        T network = networks.get(id);
+        if (network == null) {
+            network = factory.apply(id);
+            network.setNetworkAccess(this);
+            network.update();
+            networks.put(id, network);
+        }
+        return network;
     }
 
     /**
@@ -115,12 +123,90 @@ public class SpatialNetworkMap<T extends Network> extends ManagedSpatialNetwork 
     }
 
     @Override
+    public void update(int id) {
+        getNetwork(id).update();
+    }
+
+    @Override
     public void merge(int first, int second) {
-        super.merge(first, second);
+        getNetwork(first).update();
     }
 
     @Override
     public void split(int first, int second) {
-        super.split(first, second);
+        getNetwork(first).update();
+        getNetwork(second).update();
+    }
+
+    public void write(FriendlyByteBuf buf) {
+        buf.writeVarInt(networkPositions.size());
+
+        for (Map.Entry<Integer, Set<SmallOctPos>> entry : networkPositions.entrySet()) {
+            int rootId = entry.getKey();
+            Set<SmallOctPos> positions = entry.getValue();
+
+            buf.writeVarInt(rootId);
+            buf.writeVarInt(positions.size());
+
+            for (SmallOctPos pos : positions) {
+                buf.writeLong(pos.x());
+                buf.writeLong(pos.y());
+                buf.writeLong(pos.z());
+            }
+        }
+
+        buf.writeVarInt(networks.size());
+        networks.forEach((integer, t) -> {
+            buf.writeVarInt(integer);
+            t.write(buf);
+        });
+    }
+
+    public void read(FriendlyByteBuf buf) {
+        this.dsu.clear();
+        this.networkPositions.clear();
+
+         this.cache.clear();
+
+        int highestId = 0;
+        int networkCount = buf.readVarInt();
+
+        for (int i = 0; i < networkCount; i++) {
+            int rootId = buf.readVarInt();
+            int posCount = buf.readVarInt();
+
+            if (rootId > highestId) {
+                highestId = rootId;
+            }
+
+            this.dsu.put(rootId, rootId);
+
+            Set<SmallOctPos> positions = new HashSet<>(posCount);
+            this.networkPositions.put(rootId, positions);
+
+            for (int j = 0; j < posCount; j++) {
+                long x = buf.readLong();
+                long y = buf.readLong();
+                long z = buf.readLong();
+
+                SmallOctPos pos = new SmallOctPos(x, y, z);
+                positions.add(pos);
+
+                this.cache.put(x, y, z, rootId);
+            }
+        }
+
+        this.idGenerator.set(highestId + 1);
+
+        int networkObjectCount = buf.readVarInt();
+        for (int i = 0; i < networkObjectCount; i++) {
+            int key = buf.readVarInt();
+
+            T network = factory.apply(key);
+            network.setNetworkAccess(this);
+            network.update();
+            network.read(buf);
+            networks.put(key, network);
+        }
     }
 }

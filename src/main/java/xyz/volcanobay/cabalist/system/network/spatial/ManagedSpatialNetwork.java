@@ -8,9 +8,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @ApiStatus.Internal
 public abstract class ManagedSpatialNetwork {
-    private final SpatialMap cache;
-    private final AtomicInteger idGenerator = new AtomicInteger(1);
-    private final Map<Integer, Integer> dsu = new HashMap<>();
+    protected final SpatialMap cache;
+    protected final AtomicInteger idGenerator = new AtomicInteger(1);
+    protected final Map<Integer, Integer> dsu = new HashMap<>();
+    protected final Map<Integer, Set<SmallOctPos>> networkPositions = new HashMap<>();
 
     public ManagedSpatialNetwork(int initialCacheSize) {
         this.cache = new SpatialMap(initialCacheSize);
@@ -32,8 +33,22 @@ public abstract class ManagedSpatialNetwork {
      */
     protected abstract boolean isMember(long x, long y, long z);
 
-    public void merge(int first, int second) {}
-    public void split(int first, int second) {}
+    public void merge(int first, int second) {
+    }
+
+    public void split(int first, int second) {
+    }
+
+    public void update(int id) {
+    }
+
+    /**
+     * Returns a set of all positions in a given network.
+     */
+    public Set<SmallOctPos> getNetworkMembers(int networkId) {
+        int rootId = findRoot(networkId);
+        return Collections.unmodifiableSet(networkPositions.getOrDefault(rootId, Collections.emptySet()));
+    }
 
     public int getOrDiscover(long x, long y, long z) {
         int rawId = cache.get(x, y, z);
@@ -62,7 +77,11 @@ public abstract class ManagedSpatialNetwork {
             while (it.hasNext()) union(finalId, it.next());
         }
 
-        for (long[] p : members) cache.put(p[0], p[1], p[2], finalId);
+        networkPositions.putIfAbsent(finalId, new HashSet<>());
+        for (long[] p : members) {
+            cache.put(p[0], p[1], p[2], finalId);
+            networkPositions.get(finalId).add(new SmallOctPos(p[0], p[1], p[2]));
+        }
         return finalId;
     }
 
@@ -84,6 +103,8 @@ public abstract class ManagedSpatialNetwork {
             int finalId = neighborRoots.iterator().next();
             for (int r : neighborRoots) union(finalId, r);
             cache.put(x, y, z, finalId);
+            networkPositions.computeIfAbsent(finalId, k -> new HashSet<>()).add(new SmallOctPos(x, y, z));
+            update(finalId);
             return finalId;
         }
     }
@@ -94,6 +115,11 @@ public abstract class ManagedSpatialNetwork {
         int rootId = findRoot(netId);
 
         cache.remove(x, y, z);
+
+        Set<SmallOctPos> oldSet = networkPositions.get(rootId);
+        if (oldSet != null) {
+            oldSet.remove(new SmallOctPos(x, y, z));
+        }
 
         long[][] neighbors = getPhysicalNeighbors(x, y, z);
         List<long[]> oldNetworkNeighbors = new ArrayList<>();
@@ -108,6 +134,7 @@ public abstract class ManagedSpatialNetwork {
         if (oldNetworkNeighbors.size() > 1) {
             handlePotentialSplit(oldNetworkNeighbors, rootId);
         }
+        update(rootId);
     }
 
     public void updatePoint(long x, long y, long z) {
@@ -116,6 +143,9 @@ public abstract class ManagedSpatialNetwork {
         int oldRootId = findRoot(currentRawId);
 
         cache.remove(x, y, z);
+
+        Set<SmallOctPos> oldSet = networkPositions.get(oldRootId);
+        if (oldSet != null) oldSet.remove(new SmallOctPos(x, y, z));
 
         long[][] physicalNeighbors = getPhysicalNeighbors(x, y, z);
         List<long[]> oldNetworkNeighbors = new ArrayList<>();
@@ -143,6 +173,7 @@ public abstract class ManagedSpatialNetwork {
             int newId = idGenerator.getAndIncrement();
             dsu.put(newId, newId);
             cache.put(x, y, z, newId);
+            networkPositions.computeIfAbsent(newId, k -> new HashSet<>()).add(new SmallOctPos(x, y, z));
         } else {
             Iterator<Integer> it = currentNeighborRoots.iterator();
             int finalId = it.next();
@@ -150,6 +181,8 @@ public abstract class ManagedSpatialNetwork {
                 union(finalId, it.next());
             }
             cache.put(x, y, z, finalId);
+            networkPositions.computeIfAbsent(finalId, k -> new HashSet<>()).add(new SmallOctPos(x, y, z));
+            update(finalId);
         }
     }
 
@@ -190,13 +223,18 @@ public abstract class ManagedSpatialNetwork {
             }
         }
     }
+
     private Set<SmallOctPos> reindexComponent(long[] startNode, int oldRootId) {
         int newId = idGenerator.getAndIncrement();
         dsu.put(newId, newId);
 
+        networkPositions.put(newId, new HashSet<>());
+
         Set<SmallOctPos> componentNodes = new HashSet<>();
         Queue<long[]> queue = new LinkedList<>();
         queue.add(startNode);
+
+        Set<SmallOctPos> oldNetworkNodes = networkPositions.get(oldRootId);
 
         while (!queue.isEmpty()) {
             long[] curr = queue.poll();
@@ -206,6 +244,11 @@ public abstract class ManagedSpatialNetwork {
             componentNodes.add(c);
 
             cache.put(curr[0], curr[1], curr[2], newId);
+
+            networkPositions.get(newId).add(c);
+            if (oldNetworkNodes != null) {
+                oldNetworkNodes.remove(c);
+            }
 
             for (long[] n : getPhysicalNeighbors(curr)) {
                 int currentRawId = cache.get(n[0], n[1], n[2]);
@@ -246,9 +289,17 @@ public abstract class ManagedSpatialNetwork {
     private void union(int id1, int id2) {
         int r1 = findRoot(id1);
         int r2 = findRoot(id2);
+
         if (r1 != r2) {
-            merge(r1,r2);
+            Set<SmallOctPos> nodes1 = networkPositions.computeIfAbsent(r1, k -> new HashSet<>());
+            Set<SmallOctPos> nodes2 = networkPositions.remove(r2);
+
+            if (nodes2 != null) {
+                nodes1.addAll(nodes2);
+            }
+
             dsu.put(r2, r1);
+            merge(r1, r2);
         }
     }
 

@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "cabalist.refmap.json",
   "mixins": [
+    "ExplosionMixin"
   ],
   "client": [
   ],

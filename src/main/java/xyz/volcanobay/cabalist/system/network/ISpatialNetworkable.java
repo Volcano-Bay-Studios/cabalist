@@ -19,15 +19,9 @@ public interface ISpatialNetworkable {
 
 
     default void place(BlockPos pos, Level level) {
-        for (CabalistSpatialNetworks.NetworkHolder<? extends Network> spatialNetwork : spatialNetworks()) {
-            spatialNetwork.get(level).addPoint(pos.getX(), pos.getY(), pos.getZ());
-        }
     }
 
     default void destroy(BlockPos pos, Level level) {
-        for (CabalistSpatialNetworks.NetworkHolder<? extends Network> spatialNetwork : spatialNetworks()) {
-            spatialNetwork.get(level).removePoint(pos.getX(), pos.getY(), pos.getZ());
-        }
     }
 
     default void update(BlockPos pos, Level level) {

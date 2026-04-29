@@ -13,22 +13,12 @@ import xyz.volcanobay.cabalist.system.network.Network;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-public class OscilistoneBlock extends Block implements ISpatialNetworkable {
+public class OscilistoneBlock extends Block {
     public OscilistoneBlock(Properties blockProperties) {
         super(blockProperties);
     }
 
     @Override
     protected void onExplosionHit(BlockState p_311951_, Level p_312820_, BlockPos p_312489_, Explosion p_312925_, BiConsumer<ItemStack, BlockPos> p_312073_) {
-    }
-
-    @Override
-    public List<CabalistSpatialNetworks.NetworkHolder<? extends Network>> spatialNetworks() {
-        return List.of(CabalistSpatialNetworks.ENTROPY_NETWORK);
-    }
-
-    @Override
-    public boolean shouldConnectNetwork(BlockState firstState, BlockState secondState, Level level, BlockPos first, BlockPos second) {
-        return first.distManhattan(second) < 2;
     }
 }

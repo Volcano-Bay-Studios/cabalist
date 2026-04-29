@@ -8,6 +8,7 @@ import net.minecraft.world.item.Item;
 import xyz.volcanobay.cabalist.Cabalist;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -27,6 +28,9 @@ public class CabalistItems {
         return object;
     }
 
+    public static Collection<RegistryObject<Item>> getItems() {
+        return ITEMS.getEntries();
+    }
 
     public static void bootstrap() {
     }

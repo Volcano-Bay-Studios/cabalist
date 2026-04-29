@@ -2,6 +2,7 @@ package xyz.volcanobay.cabalist.system.network;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -27,6 +28,19 @@ public abstract class Network {
                     if (secondNetworkable.spatialNetworks().contains(spatialNetwork)) {
                         return true;
                     }
+                }
+            }
+        }
+        return false;
+    }
+
+    protected boolean isMember(long x, long y, long z, Level level, ResourceLocation location) {
+        BlockPos pos = new BlockPos((int) x, (int) y, (int) z);
+        BlockState blockState = level.getBlockState(pos);
+        if (blockState.getBlock() instanceof ISpatialNetworkable networkable) {
+            for (CabalistSpatialNetworks.NetworkHolder<? extends Network> networkHolder : networkable.spatialNetworks()) {
+                if (networkHolder.getLocation().equals(location)) {
+                    return true;
                 }
             }
         }

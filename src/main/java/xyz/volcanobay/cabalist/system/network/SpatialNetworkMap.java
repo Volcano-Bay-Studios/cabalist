@@ -30,6 +30,10 @@ public class SpatialNetworkMap<T extends Network> extends ManagedSpatialNetwork 
         this.level = level;
     }
 
+    public Level getLevel() {
+        return level;
+    }
+
     public T getNetwork(int id) {
         T network = networks.get(id);
         if (network == null) {
@@ -78,17 +82,9 @@ public class SpatialNetworkMap<T extends Network> extends ManagedSpatialNetwork 
 
     @Override
     protected boolean isMember(long x, long y, long z) {
-        BlockPos pos = new BlockPos((int) x, (int) y, (int) z);
-        BlockState blockState = level.getBlockState(pos);
-        if (blockState.getBlock() instanceof ISpatialNetworkable networkable) {
-            for (CabalistSpatialNetworks.NetworkHolder<? extends Network> networkHolder : networkable.spatialNetworks()) {
-                if (networkHolder.getLocation().equals(location)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return defaultNetwork.isMember(x,y,z,level, location);
     }
+
 
     @Override
     protected Collection<long[]> discoverNetworkMembers(long x, long y, long z) {

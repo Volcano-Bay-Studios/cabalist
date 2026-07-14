@@ -16,6 +16,8 @@ import java.util.Set;
 public class EntropyNetwork extends Network {
     private int freeEntropyCapacity = 0;
     private int entropyCapacity = 0;
+    private float freeEntropy = 0;
+    private float storedEntropy = 0;
 
     public EntropyNetwork(Integer id) {
         super(id);

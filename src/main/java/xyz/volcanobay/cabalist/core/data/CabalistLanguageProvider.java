@@ -28,6 +28,7 @@ public class CabalistLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
+        add("itemGroup.cabalist","Cabalist");
         autoLang();
     }
 

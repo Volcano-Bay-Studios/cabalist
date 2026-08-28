@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.neoforged.api.distmarker.Dist;
@@ -18,19 +19,26 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.slf4j.Logger;
 import xyz.volcanobay.cabalist.core.*;
 import xyz.volcanobay.cabalist.core.data.CabalistBlockModelProvider;
 import xyz.volcanobay.cabalist.core.data.CabalistItemModelProvider;
 import xyz.volcanobay.cabalist.core.data.CabalistLanguageProvider;
 import xyz.volcanobay.cabalist.core.data.CabalistTagsProvider;
+import xyz.volcanobay.cabalist.system.contract.ContractManager;
+import xyz.volcanobay.cabalist.system.network.Network;
+import xyz.volcanobay.cabalist.system.network.NetworkSavedData;
+import xyz.volcanobay.cabalist.system.network.SpatialNetworkMap;
 
-// The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Cabalist.MODID)
 public class Cabalist {
     public static final String MODID = "cabalist";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public Cabalist(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
@@ -41,9 +49,33 @@ public class Cabalist {
 
         CabalistSpatialNetworks.bootstrap();
         CabalistBlocks.bootstrap();
+        CabalistBlockEntities.bootstrap();
         CabalistItems.bootstrap();
         CabalistCreativeModeTab.bootstrap();
         CabalistTags.bootstrap();
+        CabalistTerms.bootstrap();
+        CabalistModifiers.bootstrap();
+        CabalistDomains.bootstrap();
+        CabalistSpellDictionary.bootstrap();
+    }
+
+    @SubscribeEvent
+    public void onServerLevelTick(LevelTickEvent.Pre event) {
+        if (event.getLevel() instanceof ServerLevel serverLevel) {
+            NetworkSavedData.get(serverLevel);
+            for (CabalistSpatialNetworks.NetworkHolder<? extends Network> network : CabalistSpatialNetworks.NETWORKS) {
+                SpatialNetworkMap<? extends Network> spatialNetworkMap = network.get(serverLevel);
+                spatialNetworkMap.tick(serverLevel);
+            }
+        }
+    }
+
+
+    @SubscribeEvent
+    public void onServerStopping(ServerStoppingEvent event) {
+        for (CabalistSpatialNetworks.NetworkHolder<? extends Network> network : CabalistSpatialNetworks.NETWORKS) {
+            network.wipe();
+        }
     }
 
     public static ResourceLocation id(String path) {
@@ -103,6 +135,16 @@ public class Cabalist {
                     event.includeServer(),
                     new CabalistTagsProvider(output,  event.getLookupProvider(), existingFileHelper)
             );
+        }
+
+        @SubscribeEvent
+        public static void reloadData(AddReloadListenerEvent addReloadListenerEvent) {
+            addReloadListenerEvent.addListener(CabalistSpellDictionary.Reloader.INSTANCE);
+        }
+
+        @SubscribeEvent
+        public static void onServerTick(ServerTickEvent.Pre event) {
+            ContractManager.INSTANCE.tick();
         }
     }
 }

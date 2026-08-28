@@ -3,13 +3,15 @@ package xyz.volcanobay.cabalist.system.network;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import xyz.volcanobay.cabalist.core.CabalistSpatialNetworks;
+import xyz.volcanobay.cabalist.util.BlockHelper;
 
 public abstract class Network {
-    protected final int id;
+    protected int id;
     protected @Nullable SpatialNetworkMap<?> networkAccess = null;
 
     public Network(Integer id) {
@@ -22,8 +24,8 @@ public abstract class Network {
     }
 
     public boolean shouldConnect(BlockState firstState, BlockState secondState, Level level, BlockPos first, BlockPos second) {
-        if (getBlockOverride(firstState,level,first) instanceof ISpatialNetworkable firstNetworkable && getBlockOverride(secondState,level,second) instanceof ISpatialNetworkable secondNetworkable) {
-            if (firstNetworkable.shouldConnectNetwork(firstState, secondState, level, first, second) && secondNetworkable.shouldConnectNetwork(secondState,firstState,level,second,first)) {
+        if (getBlockOverride(firstState, level, first) instanceof ISpatialNetworkable firstNetworkable && getBlockOverride(secondState, level, second) instanceof ISpatialNetworkable secondNetworkable) {
+            if (firstNetworkable.shouldConnectNetwork(firstState, secondState, level, first, second) && secondNetworkable.shouldConnectNetwork(secondState, firstState, level, second, first)) {
                 for (CabalistSpatialNetworks.NetworkHolder<? extends Network> spatialNetwork : firstNetworkable.spatialNetworks()) {
                     if (secondNetworkable.spatialNetworks().contains(spatialNetwork)) {
                         return true;
@@ -34,7 +36,7 @@ public abstract class Network {
         return false;
     }
 
-    protected boolean isMember(long x, long y, long z, Level level, ResourceLocation location) {
+    public boolean isMember(long x, long y, long z, Level level, ResourceLocation location) {
         BlockPos pos = new BlockPos((int) x, (int) y, (int) z);
         BlockState blockState = level.getBlockState(pos);
         if (blockState.getBlock() instanceof ISpatialNetworkable networkable) {
@@ -54,13 +56,17 @@ public abstract class Network {
     /**
      * Called when the network changes
      */
-    public void update() {}
+    public void update() {
+    }
+
+    public void tick(ServerLevel level) {
+    }
 
     public void write(FriendlyByteBuf buf) {
-
+        buf.writeVarInt(id);
     }
 
     public void read(FriendlyByteBuf buf) {
-
+        id = buf.readVarInt();
     }
 }

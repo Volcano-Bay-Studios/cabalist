@@ -18,11 +18,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class CabalistBlockModelProvider extends BlockStateProvider implements DataProvider {
-
-
     public CabalistBlockModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, Cabalist.MODID, existingFileHelper);
-
     }
 
     @Override
@@ -30,10 +27,6 @@ public class CabalistBlockModelProvider extends BlockStateProvider implements Da
         simpleBlock(CabalistBlocks.OSCILISTONE.get());
         simpleBlock(CabalistBlocks.SUPERHEATED_SAND.get());
     }
-
-//    protected void registerObjModels() {
-//        simpleObj("cassini:block/control_panel", "block", "control_panel");
-//    }
 
     public ModelFile.ExistingModelFile existingFile(String file, String... path) {
         StringBuilder finalPath = new StringBuilder();
@@ -44,11 +37,6 @@ public class CabalistBlockModelProvider extends BlockStateProvider implements Da
         finalPath.append(file);
         return models().getExistingFile(Cabalist.id(finalPath.toString()));
     }
-
-//    public ModelFile.ExistingModelFile existingObjFile(String file, String... path) {
-//        String finalPath = this.getPath("block", file, path);
-//        return objModels.getExistingFile(Cassini.id(finalPath));
-//    }
 
     public ModelFile.ExistingModelFile existingOctFile(String file, String... path) {
         StringBuilder finalPath = new StringBuilder();
@@ -64,159 +52,6 @@ public class CabalistBlockModelProvider extends BlockStateProvider implements Da
         String finalPath = this.getPath("item", file, path);
         return itemModels().getExistingFile(Cabalist.id(finalPath));
     }
-//
-//    public void simpleObj(String texture, String file, String... path) {
-//        String finalPath = this.getPath("block", file, path);
-//        objModels.getBuilder(finalPath)
-//                .modelLocation(Cassini.id("models/" + finalPath + ".obj"))
-//                .overrideMaterialLibrary(Cassini.id("models/" + finalPath + ".mtl"))
-//                .automaticCulling(true)
-//                .shadeQuads(true)
-//                .flipV(true)
-//                .emissiveAmbient(true)
-//                .end()
-//                .texture("0", texture)
-//                .texture("particle", texture);
-//
-//    }
-//
-//
-//    private void registerPipe() {
-//        Block block = CassiniBlocks.METAL_OCT_PIPE.get();
-//        VariantBlockStateBuilder builder = getVariantBuilder(block);
-//
-//        block.getStateDefinition().getPossibleStates().forEach(state -> {
-//            boolean n = state.getValue(BlockStateProperties.NORTH);
-//            boolean s = state.getValue(BlockStateProperties.SOUTH);
-//            boolean e = state.getValue(BlockStateProperties.EAST);
-//            boolean w = state.getValue(BlockStateProperties.WEST);
-//            boolean u = state.getValue(BlockStateProperties.UP);
-//            boolean d = state.getValue(BlockStateProperties.DOWN);
-//
-//            String name = "pipe_" + (n ? "n" : "") + (s ? "s" : "") + (e ? "e" : "") + (w ? "w" : "") + (u ? "u" : "") + (d ? "d" : "");
-//            if (name.equals("pipe_")) name = "pipe_none";
-//
-//            BlockModelBuilder model = models().withExistingParent("oct/pipe/" + name, "block/block")
-//                    .texture("all", modLoc("block/pipe/metal_pipe_sheet"))
-//                    .texture("particle", modLoc("block/pipe/metal_pipe_sheet"));
-//
-//            List<Pair<Direction, ModelBuilder<BlockModelBuilder>.ElementBuilder>> elements = new ArrayList<>();
-//
-//            elements.add(new Pair<>(null, model.element().from(5, 5, 5).to(11, 11, 11)));
-//
-//            if (n) {
-//                elements.add(new Pair<>(Direction.NORTH, model.element().from(5, 5, 11).to(11, 11, 12)));
-//            }
-//            if (s) {
-//                elements.add(new Pair<>(Direction.SOUTH, model.element().from(5, 5, 4).to(11, 11, 5)));
-//            }
-//            if (w) {
-//                elements.add(new Pair<>(Direction.WEST, model.element().from(11, 5, 5).to(12, 11, 11)));
-//            }
-//            if (e) {
-//                elements.add(new Pair<>(Direction.EAST, model.element().from(4, 5, 5).to(5, 11, 11)));
-//            }
-//            if (d) {
-//                elements.add(new Pair<>(Direction.DOWN, model.element().from(5, 11, 5).to(11, 12, 11)));
-//            }
-//            if (u) {
-//                elements.add(new Pair<>(Direction.UP, model.element().from(5, 4, 5).to(11, 5, 11)));
-//            }
-//
-//            for (Pair<Direction, ModelBuilder<BlockModelBuilder>.ElementBuilder> pair : elements) {
-//                Direction direction = pair.getA();
-//                ModelBuilder<BlockModelBuilder>.ElementBuilder element = pair.getB();
-//                for (Direction side : Direction.values()) {
-//                    int idx = getSpriteIndex(side, n, s, e, w, u, d);
-//                    if (direction != null) {
-//                        boolean hasUp = false, hasDown = false, hasLeft = false, hasRight = false;
-//
-//                        switch (side) {
-//                            case NORTH -> {
-//                                hasUp = direction == Direction.UP;
-//                                hasDown = direction == Direction.DOWN;
-//                                hasLeft = direction == Direction.EAST;
-//                                hasRight = direction == Direction.WEST;
-//                            }
-//                            case SOUTH -> {
-//                                hasUp = direction == Direction.UP;
-//                                hasDown = direction == Direction.DOWN;
-//                                hasLeft = direction == Direction.WEST;
-//                                hasRight = direction == Direction.EAST;
-//                            }
-//                            case EAST -> {
-//                                hasUp = direction == Direction.UP;
-//                                hasDown = direction == Direction.DOWN;
-//                                hasLeft = direction == Direction.SOUTH;
-//                                hasRight = direction == Direction.NORTH;
-//                            }
-//                            case WEST -> {
-//                                hasUp = direction == Direction.UP;
-//                                hasDown = direction == Direction.DOWN;
-//                                hasLeft = direction == Direction.NORTH;
-//                                hasRight = direction == Direction.SOUTH;
-//                            }
-//                            case UP -> {
-//                                hasUp = direction == Direction.NORTH;
-//                                hasDown = direction == Direction.SOUTH;
-//                                hasLeft = direction == Direction.WEST;
-//                                hasRight = direction == Direction.EAST;
-//                            }
-//                            case DOWN -> {
-//                                hasUp = direction == Direction.SOUTH;
-//                                hasDown = direction == Direction.NORTH;
-//                                hasLeft = direction == Direction.WEST;
-//                                hasRight = direction == Direction.EAST;
-//                            }
-//                        }
-//                        float leftX;
-//                        float rightX;
-//                        if (hasRight) {
-//                            leftX = 0;
-//                            rightX = 0.25f;
-//                        } else if (hasLeft) {
-//                            leftX = 1.75f;
-//                            rightX = 2f;
-//                        } else {
-//                            leftX = 0.25f;
-//                            rightX = 1.75f;
-//                        }
-//
-//                        float leftY;
-//                        float rightY;
-//                        if (hasDown) {
-//                            leftY = 0;
-//                            rightY = 0.25f;
-//                        } else if (hasUp) {
-//                            leftY = 1.75f;
-//                            rightY = 2f;
-//                        } else {
-//                            leftY = 0.25f;
-//                            rightY = 1.75f;
-//                        }
-//
-//                            element.face(side)
-//                                .uvs(getU(idx) + leftX, getV(idx) + leftY, getU(idx) + rightX, getV(idx) + rightY)
-//                                .texture("#all")
-//                                .end();
-//                    } else {
-//                        element.face(side)
-//                                .uvs(getU(idx) + 0.25f, getV(idx) + 0.25f, getU(idx) + 1.75f, getV(idx) + 1.75f)
-//                                .texture("#all")
-//                                .end();
-//                    }
-//                }
-//                element.end();
-//            }
-//
-//            builder.partialState()
-//                    .with(BlockStateProperties.NORTH, n).with(BlockStateProperties.SOUTH, s)
-//                    .with(BlockStateProperties.EAST, e).with(BlockStateProperties.WEST, w)
-//                    .with(BlockStateProperties.UP, u).with(BlockStateProperties.DOWN, d)
-//                    .addModels(new ConfiguredModel(model));
-//        });
-//    }
-
 
     private float getU(int index) {
         return (index % 8) * 2f;
@@ -300,7 +135,6 @@ public class CabalistBlockModelProvider extends BlockStateProvider implements Da
         }
         return 0;
     }
-
 
     public String getPath(String prefix, String file, String... path) {
         StringBuilder finalPath = new StringBuilder();

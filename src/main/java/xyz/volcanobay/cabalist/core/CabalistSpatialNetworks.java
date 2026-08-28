@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.ApiStatus;
 import xyz.volcanobay.cabalist.Cabalist;
-import xyz.volcanobay.cabalist.content.networks.EntropyNetwork;
+import xyz.volcanobay.cabalist.content.entropy.networks.EntropyNetwork;
 import xyz.volcanobay.cabalist.system.network.Network;
 import xyz.volcanobay.cabalist.system.network.SpatialNetworkMap;
 
@@ -50,6 +50,10 @@ public class CabalistSpatialNetworks {
         public SpatialNetworkMap<T> get(Level level) {
             ResourceKey<Level> dimension = level.dimension();
             return worldNetworkMap.computeIfAbsent(dimension, (levelResourceKey -> new SpatialNetworkMap<>(level, location, function)));
+        }
+
+        public void wipe() {
+            worldNetworkMap.clear();
         }
     }
 }

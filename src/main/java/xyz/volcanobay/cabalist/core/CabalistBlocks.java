@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import xyz.volcanobay.cabalist.Cabalist;
-import xyz.volcanobay.cabalist.content.blocks.OscilistoneBlock;
+import xyz.volcanobay.cabalist.content.entropy.blocks.OscilistoneBlock;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,12 +22,12 @@ public class CabalistBlocks {
 
     public static final RegistryObject<OscilistoneBlock> OSCILISTONE = registerEntropeticBlock("oscilistone",
             () -> new OscilistoneBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)
-                    .strength(2.0f, 8f).noOcclusion()
+                    .strength(2.0f, 1f).noOcclusion()
             ));
 
     public static final RegistryObject<OscilistoneBlock> SUPERHEATED_SAND = registerEntropeticBlock("superheated_sand",
             () -> new OscilistoneBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SAND)
-                    .strength(2.0f, 8f).noOcclusion()
+                    .strength(2.0f, 1f).noOcclusion()
             ));
 
     private static <T extends Block> RegistryObject<T> registerEntropeticBlock(String name, Supplier<T> block) {

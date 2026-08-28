@@ -31,7 +31,7 @@ public abstract class ManagedSpatialNetwork {
     /**
      * Returns if a block is allowed to be part of this network.
      */
-    protected abstract boolean isMember(long x, long y, long z);
+    public abstract boolean isMember(long x, long y, long z);
 
     public void merge(int first, int second) {
     }

@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -45,6 +46,16 @@ public class SpatialNetworkMap<T extends Network> extends ManagedSpatialNetwork 
         return network;
     }
 
+    public T getDefaultNetwork() {
+        return defaultNetwork;
+    }
+
+    public void tick(ServerLevel level) {
+        for (T network : networks.values()) {
+            network.tick(level);
+        }
+    }
+
     /**
      * Returns a network of blocks at a given oct coordinate.
      * This will try to find an existing network, otherwise it will create a new one.
@@ -81,10 +92,9 @@ public class SpatialNetworkMap<T extends Network> extends ManagedSpatialNetwork 
     }
 
     @Override
-    protected boolean isMember(long x, long y, long z) {
+    public boolean isMember(long x, long y, long z) {
         return defaultNetwork.isMember(x,y,z,level, location);
     }
-
 
     @Override
     protected Collection<long[]> discoverNetworkMembers(long x, long y, long z) {

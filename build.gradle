@@ -15,6 +15,10 @@ repositories {
         url = 'https://maven.blamejared.com'
     }
     maven { url = uri("https://jitpack.io") }
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+    }
 }
 
 base {
@@ -101,6 +105,7 @@ dependencies {
     jarJar(implementation("foundry.veil:veil-neoforge-${project.minecraft_version}:${project.veil_version}") {
         exclude group: "maven.modrinth"
     })
+    jarJar(implementation("maven.modrinth:voicelib:2.0"))
 
     jarJar(api(additionalRuntimeClasspath("com.github.dmeoli:WS4J:master-SNAPSHOT")));
 }

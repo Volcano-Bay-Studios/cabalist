@@ -1,8 +1,8 @@
 {
-  "words": [
-    "flame",
-    "fire",
-    "heat",
-    "burn"
-  ]
+  "words": {
+    "fire": 1.0,
+    "heat": 1.0,
+    "hot": 1.0,
+    "inferno": 1.0
+  }
 }

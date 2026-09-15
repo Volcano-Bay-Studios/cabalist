@@ -1,6 +1,6 @@
 package xyz.volcanobay.cabalist.system.spell;
 
-import xyz.volcanobay.cabalist.core.CabalistDomains;
+import xyz.volcanobay.cabalist.core.CabalistSpellDictionary;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;

@@ -61,9 +61,9 @@ public class SpellDictionary {
         }
 
         double bestSemantic = 0;
-        for (String word : words.keySet()) {
-            bestSemantic = Math.max(bestSemantic, WS4J.runHSO(phrase, word) / 16d);
-        }
+//        for (String word : words.keySet()) {
+//            bestSemantic = Math.max(bestSemantic, WS4J.runHSO(phrase, word) / 16d);
+//        }
         return Math.max(bestPhonetic, bestSemantic);
     }
 

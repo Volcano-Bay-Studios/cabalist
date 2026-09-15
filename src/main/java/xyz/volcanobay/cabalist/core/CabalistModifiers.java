@@ -17,7 +17,7 @@ public class CabalistModifiers {
     private static final RegistrationProvider<Modifier> MODIFIER = RegistrationProvider.get(MODIFIER_KEY, Cabalist.MODID);
     public static final Registry<Modifier> MODIFIER_REGISTRY = MODIFIER.asVanillaRegistry();
 
-    public static final RegistryObject<Modifier> LIMIT = registerModifier("limit", Modifier::new);
+//    public static final RegistryObject<Modifier> LIMIT = registerModifier("limit", Modifier::new);
 
     private static RegistryObject<Modifier> registerModifier(String name, Function<ResourceLocation, Modifier> termFunction) {
         ResourceLocation location = Cabalist.id(name);

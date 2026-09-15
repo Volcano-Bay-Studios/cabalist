@@ -7,6 +7,7 @@ import foundry.veil.api.resource.VeilDynamicRegistry;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.RegistryDataLoader;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -16,8 +17,10 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.volcanobay.cabalist.Cabalist;
+import xyz.volcanobay.cabalist.system.spell.SpellComponent;
 import xyz.volcanobay.cabalist.system.spell.SpellDictionary;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -90,7 +93,21 @@ public class CabalistSpellDictionary {
                         if (msg != null) {
                             Cabalist.LOGGER.error("SpellDictionary registry loading errors:{}", msg);
                         }
-                        Cabalist.LOGGER.info("Loaded {} spellDictionarys", registryAccess.registryOrThrow(SPELL_DICTIONARIES_KEY).size());
+                        Registry<SpellDictionary> dictionaries = registryAccess.registryOrThrow(SPELL_DICTIONARIES_KEY);
+                        Cabalist.LOGGER.info("Loaded {} spellDictionaries", dictionaries.size());
+                        @SuppressWarnings("unchecked")
+                        Registry<SpellComponent> parts =((Registry<Registry<SpellComponent>>) BuiltInRegistries.REGISTRY).get(CabalistParts.PART_KEY);
+                        HashSet<String> dictionaryEntries = new HashSet<>();
+                        for (SpellDictionary dictionary : dictionaries) {
+                            for (String word : dictionary.words.keySet()) {
+                                if (!dictionaryEntries.add(word)) {
+                                    Cabalist.LOGGER.error("Duplicate word in spell dictionary: {}", word);
+                                    throw new IllegalStateException("Duplicate word in spell dictionary: " + word);
+                                }
+                            }
+
+                        }
+
                     }, gameExecutor);
         }
 

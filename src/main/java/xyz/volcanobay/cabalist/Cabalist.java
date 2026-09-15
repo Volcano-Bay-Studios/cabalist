@@ -34,6 +34,7 @@ import xyz.volcanobay.cabalist.system.contract.ContractManager;
 import xyz.volcanobay.cabalist.system.network.Network;
 import xyz.volcanobay.cabalist.system.network.NetworkSavedData;
 import xyz.volcanobay.cabalist.system.network.SpatialNetworkMap;
+import xyz.volcanobay.voicelib.VoiceLibClient;
 
 @Mod(Cabalist.MODID)
 public class Cabalist {
@@ -55,7 +56,7 @@ public class Cabalist {
         CabalistTags.bootstrap();
         CabalistTerms.bootstrap();
         CabalistModifiers.bootstrap();
-        CabalistDomains.bootstrap();
+        CabalistParts.bootstrap();
         CabalistSpellDictionary.bootstrap();
     }
 
@@ -93,6 +94,7 @@ public class Cabalist {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            VoiceLibClient.printToConsole = true;
         }
 
 

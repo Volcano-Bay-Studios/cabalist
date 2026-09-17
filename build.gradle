@@ -19,6 +19,7 @@ repositories {
         name = "Modrinth"
         url = "https://api.modrinth.com/maven"
     }
+    maven { url 'https://jitpack.io' }
 }
 
 base {
@@ -107,7 +108,8 @@ dependencies {
     })
     jarJar(implementation("maven.modrinth:voicelib:2.0"))
 
-    jarJar(api(additionalRuntimeClasspath("com.github.dmeoli:WS4J:master-SNAPSHOT")));
+
+    jarJar(api(additionalRuntimeClasspath("com.github.linkfluence:fastText4j:0.2.1")));
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

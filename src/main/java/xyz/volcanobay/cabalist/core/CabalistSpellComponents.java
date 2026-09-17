@@ -11,17 +11,17 @@ import xyz.volcanobay.cabalist.system.spell.SpellComponent;
 
 import java.util.function.Supplier;
 
-public class CabalistParts {
-    public static final ResourceKey<Registry<SpellComponent>> PART_KEY = ResourceKey.createRegistryKey(Cabalist.id("part"));
+public class CabalistSpellComponents {
+    public static final ResourceKey<Registry<SpellComponent>> COMPONENT_KEY = ResourceKey.createRegistryKey(Cabalist.id("component"));
 
-    private static final RegistrationProvider<SpellComponent> PART = RegistrationProvider.get(PART_KEY, Cabalist.MODID);
-    public static final Registry<SpellComponent> PART_REGISTRY = PART.asVanillaRegistry();
+    private static final RegistrationProvider<SpellComponent> COMPONENT = RegistrationProvider.get(COMPONENT_KEY, Cabalist.MODID);
+    public static final Registry<SpellComponent> PART_REGISTRY = COMPONENT.asVanillaRegistry();
 
     public static final RegistryObject<SpellComponent> FLAME = registerPart("flame", Domain::new);
 
     private static RegistryObject<SpellComponent> registerPart(String name, Supplier<SpellComponent> termFunction) {
         ResourceLocation location = Cabalist.id(name);
-        return PART.register(location, termFunction);
+        return COMPONENT.register(location, termFunction);
     }
 
     public static void bootstrap() {

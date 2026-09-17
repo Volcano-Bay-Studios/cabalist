@@ -56,7 +56,7 @@ public class Cabalist {
         CabalistTags.bootstrap();
         CabalistTerms.bootstrap();
         CabalistModifiers.bootstrap();
-        CabalistParts.bootstrap();
+        CabalistSpellComponents.bootstrap();
         CabalistSpellDictionary.bootstrap();
     }
 
@@ -137,6 +137,7 @@ public class Cabalist {
                     event.includeServer(),
                     new CabalistTagsProvider(output,  event.getLookupProvider(), existingFileHelper)
             );
+
         }
 
         @SubscribeEvent

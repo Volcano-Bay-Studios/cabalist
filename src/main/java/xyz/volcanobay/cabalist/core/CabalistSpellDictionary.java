@@ -96,7 +96,7 @@ public class CabalistSpellDictionary {
                         Registry<SpellDictionary> dictionaries = registryAccess.registryOrThrow(SPELL_DICTIONARIES_KEY);
                         Cabalist.LOGGER.info("Loaded {} spellDictionaries", dictionaries.size());
                         @SuppressWarnings("unchecked")
-                        Registry<SpellComponent> parts =((Registry<Registry<SpellComponent>>) BuiltInRegistries.REGISTRY).get(CabalistParts.PART_KEY);
+                        Registry<SpellComponent> parts =((Registry<Registry<SpellComponent>>) BuiltInRegistries.REGISTRY).get(CabalistSpellComponents.COMPONENT_KEY);
                         HashSet<String> dictionaryEntries = new HashSet<>();
                         for (SpellDictionary dictionary : dictionaries) {
                             for (String word : dictionary.words.keySet()) {

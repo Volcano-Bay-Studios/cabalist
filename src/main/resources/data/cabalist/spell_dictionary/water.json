@@ -4,5 +4,6 @@
     "die hydrogen monoxide": 10.0,
     "wet": 1.0,
     "hydration": 1.0
-  }
+  },
+  "component": "cabalist:water"
 }

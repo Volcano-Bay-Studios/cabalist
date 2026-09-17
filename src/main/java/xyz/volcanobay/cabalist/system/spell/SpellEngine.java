@@ -21,16 +21,6 @@ public class SpellEngine {
         spell = spell.replaceAll("[^a-zA-Z0-9 ]", "");
         String[] tokens = spell.split(" ");
 
-        // find domain candidates
-
-
-        // find subject candidates
-
-
-        // find source candidates
-
-
-        // find modifier candidates
 
 
         return new Spell();
@@ -50,5 +40,9 @@ public class SpellEngine {
             }
         }
         return results;
+    }
+
+    public record Candidate(int start, int end, SpellDictionary dictionary) {
+
     }
 }

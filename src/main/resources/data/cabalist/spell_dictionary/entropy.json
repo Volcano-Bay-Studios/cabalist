@@ -4,5 +4,6 @@
     "world energy": 1.0,
     "entropy": 1.0,
     "energy": 0.5
-  }
+  },
+  "component": "cabalist:entropy"
 }

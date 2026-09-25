@@ -99,7 +99,7 @@ public class CabalistSpellDictionary {
                         Registry<SpellComponent> parts =((Registry<Registry<SpellComponent>>) BuiltInRegistries.REGISTRY).get(CabalistSpellComponents.COMPONENT_KEY);
                         HashSet<String> dictionaryEntries = new HashSet<>();
                         for (SpellDictionary dictionary : dictionaries) {
-                            for (String word : dictionary.words.keySet()) {
+                            for (String word : dictionary.text.keySet()) {
                                 if (!dictionaryEntries.add(word)) {
                                     Cabalist.LOGGER.error("Duplicate word in spell dictionary: {}", word);
                                     throw new IllegalStateException("Duplicate word in spell dictionary: " + word);

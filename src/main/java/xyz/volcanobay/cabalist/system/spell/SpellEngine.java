@@ -1,8 +1,9 @@
 package xyz.volcanobay.cabalist.system.spell;
 
-import xyz.volcanobay.cabalist.core.CabalistSpellDictionary;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 
 public class SpellEngine {
@@ -21,7 +22,7 @@ public class SpellEngine {
         spell = spell.replaceAll("[^a-zA-Z0-9 ]", "");
         String[] tokens = spell.split(" ");
 
-
+        
 
         return new Spell();
     }
@@ -42,7 +43,7 @@ public class SpellEngine {
         return results;
     }
 
-    public record Candidate(int start, int end, SpellDictionary dictionary) {
+    public record Candidate(int start, int end, List<SpellComponent> components) {
 
     }
 }

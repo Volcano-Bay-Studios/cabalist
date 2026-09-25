@@ -40,7 +40,9 @@ public class Contract implements Contractee {
 
     @Override
     public TermSet getTerms() {
-        return (TermSet) terms.clone();
+        TermSet copy = new TermSet();
+        copy.addAll(terms);
+        return copy;
     }
 
     @Override

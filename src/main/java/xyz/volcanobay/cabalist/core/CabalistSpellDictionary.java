@@ -2,12 +2,10 @@ package xyz.volcanobay.cabalist.core;
 
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
-import foundry.veil.api.quasar.data.QuasarParticles;
 import foundry.veil.api.resource.VeilDynamicRegistry;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.RegistryDataLoader;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -17,11 +15,11 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.volcanobay.cabalist.Cabalist;
-import xyz.volcanobay.cabalist.system.spell.SpellComponent;
 import xyz.volcanobay.cabalist.system.spell.SpellDictionary;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -95,17 +93,16 @@ public class CabalistSpellDictionary {
                         }
                         Registry<SpellDictionary> dictionaries = registryAccess.registryOrThrow(SPELL_DICTIONARIES_KEY);
                         Cabalist.LOGGER.info("Loaded {} spellDictionaries", dictionaries.size());
-                        @SuppressWarnings("unchecked")
-                        Registry<SpellComponent> parts =((Registry<Registry<SpellComponent>>) BuiltInRegistries.REGISTRY).get(CabalistSpellComponents.COMPONENT_KEY);
                         HashSet<String> dictionaryEntries = new HashSet<>();
-                        for (SpellDictionary dictionary : dictionaries) {
+                        for (Map.Entry<ResourceKey<SpellDictionary>, SpellDictionary> entry : dictionaries.entrySet()) {
+                            SpellDictionary dictionary = entry.getValue();
                             for (String word : dictionary.text.keySet()) {
                                 if (!dictionaryEntries.add(word)) {
                                     Cabalist.LOGGER.error("Duplicate word in spell dictionary: {}", word);
                                     throw new IllegalStateException("Duplicate word in spell dictionary: " + word);
                                 }
                             }
-
+                            dictionary.resolveSpellComponents(entry.getKey().location());
                         }
 
                     }, gameExecutor);
@@ -113,7 +110,7 @@ public class CabalistSpellDictionary {
 
         @Override
         public @NotNull String getName() {
-            return QuasarParticles.class.getSimpleName();
+            return CabalistSpellDictionary.class.getSimpleName();
         }
     }
 }

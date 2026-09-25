@@ -13,7 +13,18 @@ public class TermSet extends HashMap<ResourceLocation, Set<Term>> {
         terms.add(term);
     }
 
+    public void addAll(TermSet other) {
+        for (Set<Term> terms : other.values()) {
+            for (Term term : terms) {
+                add(term);
+            }
+        }
+    }
+
+    /**
+     * Returns an immutable empty set if there are no terms of this type.
+     */
     public @NotNull Set<Term> get(ResourceLocation resourceLocation) {
-        return this.getOrDefault(resourceLocation, new LinkedHashSet<>());
+        return this.getOrDefault(resourceLocation, Set.of());
     }
 }

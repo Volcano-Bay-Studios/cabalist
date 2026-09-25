@@ -35,7 +35,7 @@ public interface Contractee {
     default TermSet getAllAppliedTerms() {
         TermSet terms = getTerms();
         for (Contract contract : getActiveContractsList()) {
-            terms.putAll(contract.getAllAppliedTerms());
+            terms.addAll(contract.getAllAppliedTerms());
         }
         return terms;
     }

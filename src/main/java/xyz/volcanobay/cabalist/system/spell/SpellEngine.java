@@ -1,6 +1,5 @@
 package xyz.volcanobay.cabalist.system.spell;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
@@ -8,12 +7,9 @@ import java.util.concurrent.CompletableFuture;
 
 public class SpellEngine {
     public static final SpellEngine INSTANCE = new SpellEngine();
-    private static final List<CompletableFuture<Spell>> spellFutures = new ArrayList<>();
 
-    public void parseSpellFuture(String spell) {
-        CompletableFuture<Spell> spellFuture = new CompletableFuture<>();
-        spellFuture.completeAsync(() -> parseSpell(spell));
-        spellFutures.add(spellFuture);
+    public CompletableFuture<Spell> parseSpellFuture(String spell) {
+        return CompletableFuture.supplyAsync(() -> parseSpell(spell));
     }
 
     public Spell parseSpell(String spell) {
@@ -43,7 +39,7 @@ public class SpellEngine {
         return results;
     }
 
-    public record Candidate(int start, int end, List<SpellComponent> components) {
+    public record Candidate(int start, int end, List<SpellComponent> components, double score) {
 
     }
 }

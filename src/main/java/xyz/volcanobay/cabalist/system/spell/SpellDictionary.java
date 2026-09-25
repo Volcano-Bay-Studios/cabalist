@@ -11,27 +11,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SpellDictionary {
     private static final double PHONETIC_CONFIDENCE_THRESHOLD = 0.85;
+    private static final int MAX_CACHED_PHRASES = 4096;
 
     public final Map<String, Double> text;
     private final int maxWordCount;
     private final Map<String, Double> similarityCache = new ConcurrentHashMap<>();
-    private final ResourceLocation componentLocation;
+    private final Optional<ResourceLocation> componentLocation;
     private final List<ResourceLocation> components;
+    private List<SpellComponent> spellComponents = List.of();
 
     public static final Codec<SpellDictionary> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.unboundedMap(
                     Codec.STRING,
                     Codec.DOUBLE
             ).fieldOf("words").forGetter(SpellDictionary::getText),
-            ResourceLocation.CODEC.optionalFieldOf("component", Cabalist.id("empty")).forGetter(SpellDictionary::getComponentLocation),
+            ResourceLocation.CODEC.optionalFieldOf("component").forGetter(SpellDictionary::getComponentLocation),
             Codec.list(ResourceLocation.CODEC).optionalFieldOf("components", List.of()).forGetter(SpellDictionary::getComponents)
     ).apply(instance, SpellDictionary::new));
 
-    public SpellDictionary(Map<String, Double> words, ResourceLocation location, List<ResourceLocation> components) {
+    public SpellDictionary(Map<String, Double> words, Optional<ResourceLocation> location, List<ResourceLocation> components) {
         this.componentLocation = location;
         this.components = components;
         Map<String, Double> normalized = new HashMap<>();
@@ -47,7 +50,7 @@ public class SpellDictionary {
         this.maxWordCount = max;
     }
 
-    private ResourceLocation getComponentLocation() {
+    private Optional<ResourceLocation> getComponentLocation() {
         return componentLocation;
     }
 
@@ -55,18 +58,27 @@ public class SpellDictionary {
         return components;
     }
 
-    public List<SpellComponent> getSpellComponents() {
-        ArrayList<SpellComponent> spellComponents = new ArrayList<>();
+    public void resolveSpellComponents(ResourceLocation dictionaryLocation) {
+        List<SpellComponent> resolved = new ArrayList<>();
         for (ResourceLocation component : components) {
-            SpellComponent spellComponent = CabalistSpellComponents.PART_REGISTRY.get(component);
-            if (spellComponent != null) {
-                spellComponents.add(spellComponent);
-            }
+            addSpellComponent(resolved, component, dictionaryLocation);
         }
-        SpellComponent spellComponent = CabalistSpellComponents.PART_REGISTRY.get(componentLocation);
-        if (spellComponent != null) {
-            spellComponents.add(spellComponent);
+        if (componentLocation.isPresent()) {
+            addSpellComponent(resolved, componentLocation.get(), dictionaryLocation);
         }
+        spellComponents = List.copyOf(resolved);
+    }
+
+    private static void addSpellComponent(List<SpellComponent> resolved, ResourceLocation component, ResourceLocation dictionaryLocation) {
+        SpellComponent spellComponent = CabalistSpellComponents.PART_REGISTRY.get(component);
+        if (spellComponent == null) {
+            Cabalist.LOGGER.error("Spell dictionary {} references unknown component {}", dictionaryLocation, component);
+            return;
+        }
+        resolved.add(spellComponent);
+    }
+
+    public List<SpellComponent> getSpellComponents() {
         return spellComponents;
     }
 
@@ -79,6 +91,9 @@ public class SpellDictionary {
     }
 
     public double getSimilarity(String phrase) {
+        if (similarityCache.size() > MAX_CACHED_PHRASES) {
+            similarityCache.clear();
+        }
         return similarityCache.computeIfAbsent(normalize(phrase), this::computeSimilarity);
     }
 

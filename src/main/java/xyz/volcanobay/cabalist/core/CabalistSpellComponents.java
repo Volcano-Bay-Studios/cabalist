@@ -17,7 +17,8 @@ public class CabalistSpellComponents {
     private static final RegistrationProvider<SpellComponent> COMPONENT = RegistrationProvider.get(COMPONENT_KEY, Cabalist.MODID);
     public static final Registry<SpellComponent> PART_REGISTRY = COMPONENT.asVanillaRegistry();
 
-    public static final RegistryObject<SpellComponent> FLAME = registerPart("flame", Domain::new);
+    public static final RegistryObject<SpellComponent> ENTROPY = registerPart("entropy", Domain::new);
+    public static final RegistryObject<SpellComponent> WATER = registerPart("water", Domain::new);
 
     private static RegistryObject<SpellComponent> registerPart(String name, Supplier<SpellComponent> termFunction) {
         ResourceLocation location = Cabalist.id(name);

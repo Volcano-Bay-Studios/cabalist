@@ -18,6 +18,15 @@ public class WordToNumberConverter {
         numberWords.put("eight", 8.0);
         numberWords.put("nine", 9.0);
         numberWords.put("ten", 10.0);
+        numberWords.put("eleven", 11.0);
+        numberWords.put("twelve", 12.0);
+        numberWords.put("thirteen", 13.0);
+        numberWords.put("fourteen", 14.0);
+        numberWords.put("fifteen", 15.0);
+        numberWords.put("sixteen", 16.0);
+        numberWords.put("seventeen", 17.0);
+        numberWords.put("eighteen", 18.0);
+        numberWords.put("nineteen", 19.0);
         numberWords.put("twenty", 20.0);
         numberWords.put("thirty", 30.0);
         numberWords.put("forty", 40.0);
@@ -30,23 +39,44 @@ public class WordToNumberConverter {
         numberWords.put("thousand", 1000.0);
     }
 
+    public static boolean isNumberWord(String token) {
+        return numberWords.containsKey(token);
+    }
+
+    /**
+     * Returns NaN if the phrase contains no number words.
+     */
     public static double convertPhraseToDouble(String phrase) {
         String[] tokens = phrase.toLowerCase().split("\\s+");
         double total = 0.0;
         double current = 0.0;
+        boolean hasCurrent = false;
+        boolean hasNumber = false;
 
         for (String token : tokens) {
-            if (!numberWords.containsKey(token)) continue;
-            double val = numberWords.get(token);
-            if (val == 100.0) {
-                current *= val;
-            } else if (val >= 1000.0) {
-                current *= val;
-                total += current;
-                current = 0.0;
-            } else {
-                current += val;
+            Double value = numberWords.get(token);
+            if (value == null) {
+                continue;
             }
+            hasNumber = true;
+            if (value >= 100.0) {
+                if (!hasCurrent) {
+                    current = 1.0;
+                }
+                current *= value;
+                hasCurrent = true;
+                if (value >= 1000.0) {
+                    total += current;
+                    current = 0.0;
+                    hasCurrent = false;
+                }
+            } else {
+                current += value;
+                hasCurrent = true;
+            }
+        }
+        if (!hasNumber) {
+            return Double.NaN;
         }
         return total + current;
     }

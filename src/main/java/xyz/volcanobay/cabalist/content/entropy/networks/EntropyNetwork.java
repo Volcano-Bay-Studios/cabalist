@@ -3,10 +3,8 @@ package xyz.volcanobay.cabalist.content.entropy.networks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import xyz.volcanobay.cabalist.Cabalist;
 import xyz.volcanobay.cabalist.core.CabalistBlocks;
 import xyz.volcanobay.cabalist.core.CabalistConfig;
 import xyz.volcanobay.cabalist.system.network.Network;
@@ -21,6 +19,8 @@ public class EntropyNetwork extends Network {
     private double freeEntropy = 0;
     private double storedEntropy = 0;
 
+    private final BlockPos.MutableBlockPos memberPos = new BlockPos.MutableBlockPos();
+
     public EntropyNetwork(Integer id) {
         super(id);
     }
@@ -32,9 +32,9 @@ public class EntropyNetwork extends Network {
 
     @Override
     public boolean isMember(long x, long y, long z, Level level, ResourceLocation location) {
-        BlockPos pos = new BlockPos((int) x, (int) y, (int) z);
-        BlockState blockState = level.getBlockState(pos);
-        return BlockHelper.isEntropetic(blockState, pos, level);
+        memberPos.set((int) x, (int) y, (int) z);
+        BlockState blockState = level.getBlockState(memberPos);
+        return BlockHelper.isEntropetic(blockState, memberPos, level);
     }
 
     public double getFreeEntropy() {
@@ -57,23 +57,18 @@ public class EntropyNetwork extends Network {
             Level level = networkAccess.getLevel();
             if (level != null) {
                 freeEntropyCapacity = 0;
+                storedEntropyCapacity = 0;
                 Set<ManagedSpatialNetwork.SmallOctPos> networkMembers = networkAccess.getNetworkMembers(id);
                 for (ManagedSpatialNetwork.SmallOctPos networkMember : networkMembers) {
                     freeEntropyCapacity += CabalistConfig.FREE_ENTROPY_PER_NETWORK_MEMBER.get();
-                    BlockPos pos = new BlockPos((int) networkMember.x(), (int) networkMember.y(), (int) networkMember.z());
-                    BlockState blockState = level.getBlockState(pos);
+                    memberPos.set((int) networkMember.x(), (int) networkMember.y(), (int) networkMember.z());
+                    BlockState blockState = level.getBlockState(memberPos);
                     if (blockState.is(CabalistBlocks.SUPERHEATED_SAND.get())) {
                         storedEntropyCapacity += CabalistConfig.ENTROPY_CAPACITY_PER_SUPERHEATED_SAND.get();
                     }
                 }
             }
         }
-    }
-
-    @Override
-    public void tick(ServerLevel level) {
-        super.tick(level);
-        Cabalist.LOGGER.info("Entropy Network: " + freeEntropy + "/" + freeEntropyCapacity);
     }
 
     @Override

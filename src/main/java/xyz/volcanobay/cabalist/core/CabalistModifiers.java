@@ -6,7 +6,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import xyz.volcanobay.cabalist.Cabalist;
-import xyz.volcanobay.cabalist.content.contract.terms.LimitTerm;
 import xyz.volcanobay.cabalist.system.spell.Modifier;
 
 import java.util.function.Function;

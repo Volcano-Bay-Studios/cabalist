@@ -1,0 +1,9 @@
+{
+  "words": {
+    "rain it down": 1.0,
+    "rain down": 1.0,
+    "from above": 1.0,
+    "from the sky": 1.0
+  },
+  "component": "cabalist:sky_strike"
+}

@@ -1,0 +1,20 @@
+{
+  "words": {
+    "i consent": 1.0,
+    "i accept": 1.0,
+    "so be it": 1.0,
+    "i agree": 1.0,
+    "yes": 1.0,
+    "yeah": 1.0,
+    "yep": 1.0,
+    "yup": 1.0,
+    "sure": 1.0,
+    "aye": 1.0,
+    "affirmative": 1.0,
+    "indeed": 1.0,
+    "of course": 1.0,
+    "do it": 1.0,
+    "i do": 1.0
+  },
+  "component": "cabalist:consent"
+}

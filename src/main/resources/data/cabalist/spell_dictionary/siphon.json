@@ -1,0 +1,8 @@
+{
+  "words": {
+    "siphon": 1.0,
+    "drain": 1.0,
+    "leech": 1.0
+  },
+  "component": "cabalist:siphon"
+}

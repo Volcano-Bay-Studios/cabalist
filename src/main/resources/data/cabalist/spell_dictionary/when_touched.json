@@ -1,0 +1,8 @@
+{
+  "words": {
+    "when touched": 1.0,
+    "upon touch": 1.0,
+    "when i am touched": 1.0
+  },
+  "component": "cabalist:when_touched"
+}

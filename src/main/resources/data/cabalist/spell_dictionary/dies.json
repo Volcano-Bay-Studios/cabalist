@@ -1,0 +1,11 @@
+{
+  "words": {
+    "dies": 1.0,
+    "die": 1.0,
+    "is slain": 1.0,
+    "is killed": 1.0,
+    "is destroyed": 1.0,
+    "perishes": 1.0
+  },
+  "component": "cabalist:dies"
+}

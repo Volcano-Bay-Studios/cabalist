@@ -1,0 +1,11 @@
+{
+  "words": {
+    "in off hand": 1.0,
+    "in other hand": 1.0,
+    "other hand": 1.0,
+    "off hand": 1.0,
+    "offhand": 1.0,
+    "other item": 1.5
+  },
+  "component": "cabalist:off_hand"
+}

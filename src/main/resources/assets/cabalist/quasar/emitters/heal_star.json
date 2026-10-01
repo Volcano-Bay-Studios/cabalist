@@ -1,0 +1,11 @@
+{
+  "max_lifetime": 20,
+  "loop": true,
+  "rate": 5,
+  "count": 1,
+  "emitter_settings": {
+    "shape": "cabalist:standard",
+    "particle_settings": "cabalist:star"
+  },
+  "particle_data": "cabalist:heal_star"
+}

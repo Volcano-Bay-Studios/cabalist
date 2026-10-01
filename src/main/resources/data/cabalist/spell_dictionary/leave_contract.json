@@ -1,0 +1,8 @@
+{
+  "words": {
+    "leave": 1.0,
+    "forsake": 1.0,
+    "abandon": 1.0
+  },
+  "component": "cabalist:leave_contract"
+}

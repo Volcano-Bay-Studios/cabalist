@@ -1,0 +1,11 @@
+{
+  "max_lifetime": 60,
+  "loop": true,
+  "rate": 2,
+  "count": 2,
+  "emitter_settings": {
+    "shape": "cabalist:standard",
+    "particle_settings": "cabalist:fire_embers"
+  },
+  "particle_data": "cabalist:fire_embers"
+}

@@ -1,0 +1,21 @@
+{
+  "words": {
+    "burn": 1.0,
+    "ignite": 1.0,
+    "ignition": 1.0,
+    "scorch": 1.0,
+    "sear": 1.0,
+    "set ablaze": 1.0,
+    "fire": 1.0,
+    "heat": 1.0,
+    "hot": 1.0,
+    "inferno": 1.0,
+    "light": 1.0,
+    "candle": 1.0,
+    "flame": 1.0
+  },
+  "components": [
+    "cabalist:ignite",
+    "cabalist:scorch"
+  ]
+}

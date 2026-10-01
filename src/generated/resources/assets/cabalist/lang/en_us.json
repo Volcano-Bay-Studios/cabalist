@@ -1,4 +1,22 @@
 {
   "block.cabalist.oscilistone": "Oscilistone",
-  "block.cabalist.superheated_sand": "Superheated Sand"
+  "block.cabalist.superheated_sand": "Superheated Sand",
+  "casting.cabalist.abandon_spell": "abandon this spell?",
+  "casting.cabalist.yes_or_no": "type yes or no",
+  "request.cabalist.amend": "%1$s proposes amending %2$s",
+  "request.cabalist.answer_hint": "type i consent or i don't",
+  "request.cabalist.appraisal": "appraisal of %s",
+  "request.cabalist.approved": "approved: %s",
+  "request.cabalist.cooldown": "you may amend %1$s again in %2$s",
+  "request.cabalist.denied": "denied: %s",
+  "request.cabalist.draft_add": "inscribe a new line here",
+  "request.cabalist.expel": "%1$s asks to expel %3$s from %2$s",
+  "request.cabalist.invite": "%1$s invites %3$s into %2$s",
+  "request.cabalist.join": "%1$s asks to join %2$s",
+  "request.cabalist.leave": "%1$s asks to leave %2$s",
+  "request.cabalist.status.burned": "burned it",
+  "request.cabalist.status.dispelled": "dispelled it",
+  "request.cabalist.status.no": "refuses",
+  "request.cabalist.status.unanswered": "has not answered",
+  "request.cabalist.status.yes": "consents"
 }

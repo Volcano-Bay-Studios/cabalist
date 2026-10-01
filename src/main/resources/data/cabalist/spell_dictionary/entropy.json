@@ -1,9 +1,9 @@
 {
   "words": {
-    "primordial force": 2.0,
+    "primordial force": 1.0,
     "world energy": 1.0,
     "entropy": 1.0,
-    "energy": 0.5
+    "energy": 1.5
   },
   "component": "cabalist:entropy"
 }

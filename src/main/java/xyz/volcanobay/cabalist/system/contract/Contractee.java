@@ -1,5 +1,9 @@
 package xyz.volcanobay.cabalist.system.contract;
 
+import net.minecraft.network.chat.Component;
+import xyz.volcanobay.cabalist.system.subject.Subject;
+import xyz.volcanobay.cabalist.system.subject.SubjectList;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -45,4 +49,24 @@ public interface Contractee {
      * This list must be mutable! Contracts will be added to this list with this method.
      */
     List<Contract> getActiveContractsList();
+
+    /**
+     * Subjects inherit this from {@link Subject}; other contractees add nothing.
+     */
+    default void collectMembers(SubjectList out) {
+    }
+
+    default void joinContract(Contract contract) {
+        if (!getActiveContractsList().contains(contract)) {
+            getActiveContractsList().add(contract);
+        }
+    }
+
+    default void leaveContract(Contract contract) {
+        getActiveContractsList().remove(contract);
+    }
+
+    default Component getDisplayName() {
+        return Component.literal(getUUID().toString());
+    }
 }

@@ -2,6 +2,7 @@ package xyz.volcanobay.cabalist.system.network;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -135,13 +136,34 @@ public class SpatialNetworkMap<T extends Network> extends ManagedSpatialNetwork 
 
     @Override
     public void merge(int first, int second) {
+        getNetwork(first).onAbsorbed(getNetwork(second));
         getNetwork(first).update();
     }
 
     @Override
     public void split(int first, int second) {
+        getNetwork(first).onSplitInto(getNetwork(second));
         getNetwork(first).update();
         getNetwork(second).update();
+    }
+
+    public CompoundTag writeStates() {
+        CompoundTag tag = new CompoundTag();
+        networks.forEach((id, network) -> {
+            if (isRoot(id)) {
+                tag.put(Integer.toString(id), network.saveState());
+            }
+        });
+        return tag;
+    }
+
+    public void readStates(CompoundTag tag) {
+        for (String key : tag.getAllKeys()) {
+            try {
+                getNetwork(Integer.parseInt(key)).loadState(tag.getCompound(key));
+            } catch (NumberFormatException ignored) {
+            }
+        }
     }
 
     public void write(FriendlyByteBuf buf) {

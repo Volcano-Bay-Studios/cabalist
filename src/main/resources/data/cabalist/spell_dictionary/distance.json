@@ -1,0 +1,8 @@
+{
+  "words": {
+    "block": 1.0,
+    "blocks": 1.0,
+    "meters": 1.0
+  },
+  "component": "cabalist:distance"
+}

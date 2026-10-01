@@ -1,0 +1,9 @@
+{
+  "words": {
+    "barrier": 1.0,
+    "wall": 1.0,
+    "bulwark": 1.0,
+    "rampart": 1.0
+  },
+  "component": "cabalist:barrier"
+}

@@ -1,0 +1,9 @@
+{
+  "words": {
+    "in hand": 1.0,
+    "main hand": 1.0,
+    "holding": 1.0,
+    "item": 1.5
+  },
+  "component": "cabalist:main_hand"
+}

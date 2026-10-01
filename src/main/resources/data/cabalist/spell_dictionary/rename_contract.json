@@ -1,0 +1,8 @@
+{
+  "words": {
+    "rename": 1.0,
+    "name it": 1.0,
+    "call it": 1.0
+  },
+  "component": "cabalist:rename_contract"
+}

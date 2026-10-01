@@ -1,0 +1,9 @@
+{
+  "words": {
+    "when struck": 1.0,
+    "when i am struck": 1.0,
+    "when hurt": 1.0,
+    "when wounded": 1.0
+  },
+  "component": "cabalist:when_struck"
+}

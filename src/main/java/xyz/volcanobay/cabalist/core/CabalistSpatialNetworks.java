@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.ApiStatus;
 import xyz.volcanobay.cabalist.Cabalist;
-import xyz.volcanobay.cabalist.content.entropy.networks.EntropyNetwork;
+import xyz.volcanobay.cabalist.system.entropy.EntropyNetwork;
 import xyz.volcanobay.cabalist.system.network.Network;
 import xyz.volcanobay.cabalist.system.network.SpatialNetworkMap;
 

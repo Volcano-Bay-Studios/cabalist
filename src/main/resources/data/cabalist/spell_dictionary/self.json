@@ -1,0 +1,10 @@
+{
+  "words": {
+    "my": 1.0,
+    "me": 1.0,
+    "i": 1.0,
+    "mine": 1.0,
+    "myself": 1.0
+  },
+  "component": "cabalist:self"
+}

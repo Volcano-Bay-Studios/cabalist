@@ -1,0 +1,11 @@
+{
+  "max_lifetime": 60,
+  "loop": true,
+  "rate": 10,
+  "count": 1,
+  "emitter_settings": {
+    "shape": "cabalist:standard",
+    "particle_settings": "cabalist:snow"
+  },
+  "particle_data": "cabalist:snow"
+}

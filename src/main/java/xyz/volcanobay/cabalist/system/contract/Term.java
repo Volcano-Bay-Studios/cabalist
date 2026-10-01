@@ -2,13 +2,13 @@ package xyz.volcanobay.cabalist.system.contract;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-
-import java.util.concurrent.CountDownLatch;
+import xyz.volcanobay.cabalist.system.spell.Spell;
+import xyz.volcanobay.cabalist.system.spell.TriggerEvent;
+import xyz.volcanobay.cabalist.system.subject.Subject;
 
 /**
- * Contracts hold terms.
+ * Terms are like requirements.
  * They have effects on many things, and they only apply to the contract and its contractees.
- * You can apply terms in many ways, some examples include: checking if a contractee has a term, using a
  */
 public class Term {
     private final ResourceLocation resourceLocation;
@@ -18,13 +18,23 @@ public class Term {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
     public int hashCode() {
         return resourceLocation.hashCode();
+    }
+
+    /**
+     * The registered term is a template; this makes a new instance to hold data. Subclasses must override.
+     */
+    public Term create() {
+        return new Term(resourceLocation);
+    }
+
+    public boolean isMetBy(TriggerEvent event, Subject host) {
+        return true;
+    }
+
+    public boolean grantsConsent(Spell spell) {
+        return false;
     }
 
     public CompoundTag write(CompoundTag tag) {

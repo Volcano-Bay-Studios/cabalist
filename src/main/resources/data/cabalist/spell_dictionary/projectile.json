@@ -1,0 +1,12 @@
+{
+  "words": {
+    "bolt": 1.0,
+    "missile": 1.0,
+    "projectile": 1.0,
+    "hurl": 1.0,
+    "throw": 1.0,
+    "ball": 1.0,
+    "orb": 1.0
+  },
+  "component": "cabalist:projectile"
+}

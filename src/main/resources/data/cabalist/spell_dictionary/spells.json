@@ -1,0 +1,10 @@
+{
+  "words": {
+    "spell": 1.0,
+    "spells": 1.0,
+    "hexes": 1.0,
+    "curses": 1.0,
+    "spells upon": 1.0
+  },
+  "component": "cabalist:spells"
+}

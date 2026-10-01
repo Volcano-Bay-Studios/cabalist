@@ -1,0 +1,9 @@
+{
+  "words": {
+    "then": 1.0,
+    "than": 1.0,
+    "after": 1.0,
+    "afterwards": 1.0
+  },
+  "component": "cabalist:then"
+}

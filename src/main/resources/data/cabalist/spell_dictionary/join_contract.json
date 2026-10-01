@@ -1,0 +1,8 @@
+{
+  "words": {
+    "join": 1.0,
+    "bind me to": 1.0,
+    "enter": 1.0
+  },
+  "component": "cabalist:join_contract"
+}

@@ -1,0 +1,12 @@
+{
+  "words": {
+    "invite": 1.0,
+    "welcome": 1.0,
+    "admit": 1.0
+  },
+  "component": "cabalist:invite",
+  "ignore" : [
+    "lend",
+    "flame"
+  ]
+}

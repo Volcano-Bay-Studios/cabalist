@@ -3,6 +3,9 @@ package xyz.volcanobay.cabalist.util;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * It uhhh converts words to numbers.
+ */
 public class WordToNumberConverter {
     private static final Map<String, Double> numberWords = new HashMap<>();
 
@@ -40,7 +43,35 @@ public class WordToNumberConverter {
     }
 
     public static boolean isNumberWord(String token) {
-        return numberWords.containsKey(token);
+        return getValue(token) != null;
+    }
+
+    public static boolean isMultiplierWord(String token) {
+        Double value = numberWords.get(token);
+        return value != null && value >= 100.0;
+    }
+
+    private static Double getValue(String token) {
+        Double value = numberWords.get(token);
+        if (value != null) {
+            return value;
+        }
+        if (isDigits(token)) {
+            return Double.parseDouble(token);
+        }
+        return null;
+    }
+
+    private static boolean isDigits(String token) {
+        if (token.isEmpty()) {
+            return false;
+        }
+        for (int i = 0; i < token.length(); i++) {
+            if (!Character.isDigit(token.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -54,12 +85,12 @@ public class WordToNumberConverter {
         boolean hasNumber = false;
 
         for (String token : tokens) {
-            Double value = numberWords.get(token);
+            Double value = getValue(token);
             if (value == null) {
                 continue;
             }
             hasNumber = true;
-            if (value >= 100.0) {
+            if (isMultiplierWord(token)) {
                 if (!hasCurrent) {
                     current = 1.0;
                 }

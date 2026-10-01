@@ -1,0 +1,17 @@
+{
+  "words": {
+    "i deny": 1.0,
+    "i refuse": 1.0,
+    "never": 1.0,
+    "no": 1.0,
+    "nope": 1.0,
+    "nah": 1.0,
+    "nay": 1.0,
+    "negative": 1.0,
+    "not yet": 1.0,
+    "no way": 1.0,
+    "i dont": 1.0,
+    "i do not": 1.0
+  },
+  "component": "cabalist:deny"
+}

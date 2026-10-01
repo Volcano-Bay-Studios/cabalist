@@ -1,0 +1,10 @@
+{
+  "words": {
+    "beam": 1.0,
+    "ray": 1.0,
+    "re": 1.0,
+    "lance": 1.0,
+    "been": 1.0
+  },
+  "component": "cabalist:beam"
+}

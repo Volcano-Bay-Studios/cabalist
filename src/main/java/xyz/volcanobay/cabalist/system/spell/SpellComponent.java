@@ -1,27 +1,35 @@
 package xyz.volcanobay.cabalist.system.spell;
 
-import net.minecraft.resources.ResourceLocation;
-
 /**
- * A part of a spell. Can be described as a "word," however, that term is inaccurate as parts can have multiple words.
- * Note that the resource location is used to identify the spell dictionary entry and to identify the part.
+ * A registered part of a spell. Components are stateless singletons shared across threads,
+ * so all per-cast state lives on {@link Word}.
  */
 public abstract class SpellComponent {
-    private ResourceLocation resourceLocation = null;
-    private SpellDictionary dictionary;
+    protected static final SpellRole[] NO_NEEDS = new SpellRole[0];
 
-    public SpellComponent() {
+    public abstract SpellRole getRole();
+
+    public SpellRole[] getNeeds() {
+        return NO_NEEDS;
     }
 
-    public SpellDictionary getDictionary() {
-        return dictionary;
+    public int getPriority() {
+        return 0;
     }
 
-    public void setResourceLocation(ResourceLocation resourceLocation) {
-        this.resourceLocation = resourceLocation;
+    /**
+     * This will claim following text. Usually encapsulated by quotation marks.
+     */
+    public boolean claimsTrailingText() {
+        return false;
     }
 
-    public void setDictionary(SpellDictionary dictionary) {
-        this.dictionary = dictionary;
+    /**
+     * Splits spells into parts
+     */
+    public boolean splitsClauses() {
+        return false;
     }
+
+    public abstract void resolve(Word word, SpellResolver resolver);
 }

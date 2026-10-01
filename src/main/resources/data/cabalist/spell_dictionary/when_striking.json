@@ -1,0 +1,9 @@
+{
+  "words": {
+    "when it strikes": 1.0,
+    "when i strike": 1.0,
+    "upon striking": 1.0,
+    "on hit": 1.0
+  },
+  "component": "cabalist:when_striking"
+}

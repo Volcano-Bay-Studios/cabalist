@@ -1,0 +1,11 @@
+{
+  "words": {
+    "when i die": 1.0,
+    "when dying": 1.0,
+    "upon my death": 1.0,
+    "when slain": 1.0,
+    "when killed": 1.0,
+    "when i perish": 1.0
+  },
+  "component": "cabalist:when_dies"
+}

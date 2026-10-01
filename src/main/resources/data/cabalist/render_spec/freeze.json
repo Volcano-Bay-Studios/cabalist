@@ -1,0 +1,7 @@
+{
+  "aspect": "cabalist:freeze",
+  "particles": [
+    "cabalist:snow"
+  ],
+  "glyph_color": "#7885CC"
+}

@@ -1,0 +1,9 @@
+{
+  "words": {
+    "inscribe": 1.0,
+    "materialize": 1.0,
+    "engrave": 1.0,
+    "etch": 1.0
+  },
+  "component": "cabalist:materialize"
+}

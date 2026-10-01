@@ -1,0 +1,8 @@
+{
+  "words": {
+    "when bloodied": 1.0,
+    "covered in blood": 1.0,
+    "when blood is drawn": 1.0
+  },
+  "component": "cabalist:when_bloodied"
+}

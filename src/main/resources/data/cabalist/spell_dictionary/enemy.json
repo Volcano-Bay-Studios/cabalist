@@ -1,0 +1,8 @@
+{
+  "words": {
+    "enemy": 1.0,
+    "foe": 1.0,
+    "attacker": 1.0
+  },
+  "component": "cabalist:enemy"
+}

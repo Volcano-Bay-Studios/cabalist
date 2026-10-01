@@ -1,0 +1,7 @@
+{
+  "aspect": "cabalist:heal",
+  "particles": [
+    "cabalist:heal_star"
+  ],
+  "glyph_color": "#FFE9AF"
+}

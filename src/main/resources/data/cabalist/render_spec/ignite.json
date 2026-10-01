@@ -1,0 +1,21 @@
+{
+  "aspect": "cabalist:ignite",
+  "particles": [
+    "cabalist:fire_embers",
+    "cabalist:fire_smoke"
+  ],
+  "layers": [
+    {
+      "shader": "cabalist:spell/fire",
+      "texture": "cabalist:textures/spell/fire.png",
+      "color": "#FFFF7A1A"
+    },
+    {
+      "shader": "cabalist:spell/glow",
+      "texture": "cabalist:textures/spell/glow.png",
+      "color": "#80FFD27A",
+      "bloom": true
+    }
+  ],
+  "glyph_color": "#FFA040"
+}

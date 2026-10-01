@@ -1,0 +1,8 @@
+{
+  "words": {
+    "when stepped on": 1.0,
+    "when stepped upon": 1.0,
+    "when trodden": 1.0
+  },
+  "component": "cabalist:when_stepped_on"
+}

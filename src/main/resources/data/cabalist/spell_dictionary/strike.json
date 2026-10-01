@@ -1,0 +1,9 @@
+{
+  "words": {
+    "strike": 1.0,
+    "struck": 1.0,
+    "smite": 1.0,
+    "smote": 1.0
+  },
+  "component": "cabalist:strike"
+}

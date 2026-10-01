@@ -20,8 +20,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import xyz.volcanobay.cabalist.content.entropy.networks.EntropyNetwork;
 import xyz.volcanobay.cabalist.core.CabalistSpatialNetworks;
+import xyz.volcanobay.cabalist.system.entropy.EntropyNetwork;
 import xyz.volcanobay.cabalist.system.network.SpatialNetworkMap;
 
 import java.util.ArrayList;

@@ -1,0 +1,9 @@
+{
+  "words": {
+    "protect": 1.0,
+    "ward": 1.0,
+    "safeguard": 1.0,
+    "claim": 1.0
+  },
+  "component": "cabalist:protect"
+}

@@ -1,0 +1,10 @@
+{
+  "words": {
+    "black": 1.0,
+    "void": 1.0,
+    "obsidian": 1.0,
+    "shadow": 1.0,
+    "darkness": 1.0
+  },
+  "component": "cabalist:color_black"
+}

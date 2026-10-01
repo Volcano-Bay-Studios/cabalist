@@ -51,7 +51,6 @@ public class SpatialMap {
             if (keysX[i] == x && keysY[i] == y && keysZ[i] == z) {
                 networkIds[i] = EMPTY;
                 size--;
-                // Backshift elements in the same cluster to fill the gap [105]
                 int j = i;
                 while (true) {
                     j = (j + 1) % capacity;

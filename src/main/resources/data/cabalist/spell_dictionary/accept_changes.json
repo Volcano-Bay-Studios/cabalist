@@ -1,0 +1,9 @@
+{
+  "words": {
+    "ratify": 1.0,
+    "affirm": 1.0,
+    "accept changes": 1.0,
+    "amend": 1.0
+  },
+  "component": "cabalist:accept_changes"
+}

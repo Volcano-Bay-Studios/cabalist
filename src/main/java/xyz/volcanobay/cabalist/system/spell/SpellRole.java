@@ -6,5 +6,8 @@ public enum SpellRole {
     REFERENT,
     ANCHOR,
     MANNER,
-    DEVOTIONAL
+    DEVOTIONAL,
+    NUMBER,
+    CONDITION,
+    CONJUNCTION
 }

@@ -50,6 +50,10 @@ public abstract class ManagedSpatialNetwork {
         return Collections.unmodifiableSet(networkPositions.getOrDefault(rootId, Collections.emptySet()));
     }
 
+    public boolean isRoot(int networkId) {
+        return dsu.containsKey(networkId) && findRoot(networkId) == networkId;
+    }
+
     public int getOrDiscover(long x, long y, long z) {
         int rawId = cache.get(x, y, z);
         if (rawId != -1) return findRoot(rawId);

@@ -1,6 +1,7 @@
 package xyz.volcanobay.cabalist.system.network;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -49,6 +50,16 @@ public abstract class Network {
         return false;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void onAbsorbed(Network absorbed) {
+    }
+
+    public void onSplitInto(Network created) {
+    }
+
     public void setNetworkAccess(@Nullable SpatialNetworkMap<?> networkAccess) {
         this.networkAccess = networkAccess;
     }
@@ -60,6 +71,13 @@ public abstract class Network {
     }
 
     public void tick(ServerLevel level) {
+    }
+
+    public CompoundTag saveState() {
+        return new CompoundTag();
+    }
+
+    public void loadState(CompoundTag tag) {
     }
 
     public void write(FriendlyByteBuf buf) {

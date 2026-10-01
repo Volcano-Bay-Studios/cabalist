@@ -29,6 +29,24 @@ public class CabalistLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         add("itemGroup.cabalist","Cabalist");
+        add("casting.cabalist.abandon_spell", "abandon this spell?");
+        add("casting.cabalist.yes_or_no", "type yes or no");
+        add("request.cabalist.join", "%1$s asks to join %2$s");
+        add("request.cabalist.invite", "%1$s invites %3$s into %2$s");
+        add("request.cabalist.leave", "%1$s asks to leave %2$s");
+        add("request.cabalist.expel", "%1$s asks to expel %3$s from %2$s");
+        add("request.cabalist.amend", "%1$s proposes amending %2$s");
+        add("request.cabalist.cooldown", "you may amend %1$s again in %2$s");
+        add("request.cabalist.draft_add", "inscribe a new line here");
+        add("request.cabalist.appraisal", "appraisal of %s");
+        add("request.cabalist.approved", "approved: %s");
+        add("request.cabalist.denied", "denied: %s");
+        add("request.cabalist.answer_hint", "type i consent or i don't");
+        add("request.cabalist.status.unanswered", "has not answered");
+        add("request.cabalist.status.yes", "consents");
+        add("request.cabalist.status.no", "refuses");
+        add("request.cabalist.status.burned", "burned it");
+        add("request.cabalist.status.dispelled", "dispelled it");
         autoLang();
     }
 

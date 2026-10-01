@@ -5,5 +5,8 @@
     "wet": 1.0,
     "hydration": 1.0
   },
+  "ignore": [
+    "it"
+  ],
   "component": "cabalist:water"
 }

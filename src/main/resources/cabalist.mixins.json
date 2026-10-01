@@ -5,10 +5,20 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "cabalist.refmap.json",
   "mixins": [
+    "EntityMixin",
     "ExplosionDamageCalculator",
-    "ExplosionMixin"
+    "ExplosionMixin",
+    "FireBlockMixin",
+    "ProjectileMixin"
   ],
   "client": [
+    "client.ItemInHandRendererAccessor",
+    "client.HumanoidArmorLayerMixin",
+    "client.ItemInHandRendererMixin",
+    "client.ItemRendererMixin",
+    "client.KeyboardHandlerMixin",
+    "client.MouseHandlerMixin",
+    "client.PlayerRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

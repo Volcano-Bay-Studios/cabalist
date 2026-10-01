@@ -1,0 +1,9 @@
+{
+  "words": {
+    "blood": 1.0,
+    "the blood": 1.0,
+    "their blood": 1.0,
+    "this blood": 1.0
+  },
+  "component": "cabalist:blood"
+}

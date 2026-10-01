@@ -1,0 +1,9 @@
+{
+  "words": {
+    "harm": 1.0,
+    "hurt": 1.0,
+    "wound": 1.0,
+    "injure": 1.0
+  },
+  "component": "cabalist:harm"
+}

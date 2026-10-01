@@ -1,0 +1,8 @@
+{
+  "words": {
+    "the spell": 1.0,
+    "this spell": 1.0,
+    "current spell": 1.0
+  },
+  "component": "cabalist:current_spell"
+}
